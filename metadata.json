@@ -1,0 +1,6 @@
+{
+  "name": "ONMOTIO - Biohybrid Sensing & Phytomining Research Workbench",
+  "description": "Research platform and engineering workbench for Ms. Heavy Metal Leaf: Phase Zero plant observation, biohybrid sensor architecture, signal correlation, and grant proposal generator.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
