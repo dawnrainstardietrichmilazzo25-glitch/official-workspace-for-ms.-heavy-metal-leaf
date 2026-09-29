@@ -9,7 +9,9 @@ import {
   ShieldCheck, 
   Sparkles, 
   Download,
-  Box
+  Box,
+  TrendingUp,
+  LineChart
 } from 'lucide-react';
 import { ActiveTab } from '../types';
 
@@ -37,6 +39,8 @@ export const Header: React.FC<HeaderProps> = ({
   onOpenQuickLog
 }) => {
   const tabs: TabItem[] = [
+    { id: 'dashboard', label: 'Environmental Dashboard', icon: TrendingUp, badge: 'Telemetry' },
+    { id: 'analytics', label: 'Bio-Correlation Analytics', icon: LineChart, badge: 'Recharts' },
     { id: 'observations', label: 'Plant Observations', icon: Sprout, count: observationCount },
     { id: 'simulator', label: 'Signal Oscilloscope', icon: Activity, badge: 'Live' },
     { id: 'architecture', label: 'Hardware Architecture', icon: Cpu, badge: 'AFE & MCU' },
@@ -53,11 +57,18 @@ export const Header: React.FC<HeaderProps> = ({
         <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
           
           <div className="flex items-start gap-3.5">
-            <div className="relative p-2.5 rounded-xl bg-gradient-to-br from-emerald-500/20 via-emerald-500/10 to-teal-500/20 border border-emerald-500/30 text-emerald-400 shadow-lg shadow-emerald-950/40">
-              <Sprout className="w-7 h-7 animate-pulse" />
-              <span className="absolute -bottom-1 -right-1 flex h-3 w-3">
+            <div className="relative shrink-0">
+              <div className="w-12 h-12 sm:w-13 sm:h-13 rounded-xl overflow-hidden border-2 border-emerald-500/60 shadow-lg shadow-emerald-950/60 bg-slate-950 group ring-2 ring-emerald-500/20">
+                <img
+                  src="/src/assets/images/heavy_metal_logo_1790710894520.jpg"
+                  alt="Ms. Heavy Metal Leaf Logo"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                  referrerPolicy="no-referrer"
+                />
+              </div>
+              <span className="absolute -bottom-1 -right-1 flex h-3.5 w-3.5">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-3 w-3 bg-emerald-500"></span>
+                <span className="relative inline-flex rounded-full h-3.5 w-3.5 bg-emerald-500 border-2 border-slate-900"></span>
               </span>
             </div>
 

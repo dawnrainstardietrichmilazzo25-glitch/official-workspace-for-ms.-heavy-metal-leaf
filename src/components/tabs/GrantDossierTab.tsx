@@ -14,7 +14,11 @@ import {
   ExternalLink,
   ChevronRight,
   ShieldCheck,
-  Edit3
+  Edit3,
+  Terminal,
+  Loader2,
+  FileCheck,
+  Layers
 } from 'lucide-react';
 import { GrantOpportunity } from '../../types';
 import { GRANT_OPPORTUNITIES } from '../../data/mockData';
@@ -23,6 +27,8 @@ import { downloadTextFile } from '../../utils/analysis';
 export const GrantDossierTab: React.FC = () => {
   const [selectedOpportunityId, setSelectedOpportunityId] = useState<string>('grant-wa-water-quality');
   const [copied, setCopied] = useState(false);
+  const [copiedCurl, setCopiedCurl] = useState(false);
+  const [isGeneratingPdf, setIsGeneratingPdf] = useState(false);
   const [activeTab, setActiveTab] = useState<'proposal' | 'tracker' | 'budget'>('proposal');
 
   const selectedGrant = GRANT_OPPORTUNITIES.find(g => g.id === selectedOpportunityId) || GRANT_OPPORTUNITIES[0];
@@ -62,6 +68,9 @@ Ms. Heavy Metal Leaf embodies three interconnected ecological and technological 
 1. **Phytoremediation:** Active extraction and sequestration of toxic heavy metals from contaminated soil and agricultural water runoff.
 2. **Phytomining:** Accumulation and concentration of valuable metals in harvestable plant tissues, reducing the imperative for destructive industrial mining.
 3. **Biohybrid Robotics & Grown Circuitry:** Demonstrating that structural, conductive, and sensing components can be *grown* in-vivo within plant vascular structures (cyborg-botany) rather than fabricated through fossil-fuel-heavy manufacturing.
+
+> **Morphological Optimization Note from Founder Dawn:**
+> *"Her depiction in the shape of a human was my first intuitive vision of her—serving as an archetypal avatar bridging hyperaccumulator plants, humans, machines, and myth. However, for physical deployment and engineering optimization, her physical shape can be freely altered and re-engineered: adapting into modular floating wetland rafts, vertical riparian cascades, or fractal root geometries to maximize fluid dynamics, phytomining kinetics, and environmental sensing yield."*
 
 ---
 
@@ -135,6 +144,107 @@ ONMOTIO is committed to open hardware standards for core environmental monitorin
     setTimeout(() => setCopied(false), 2500);
   };
 
+  const handleGenerateNsfPdf = async () => {
+    setIsGeneratingPdf(true);
+    try {
+      const htmlContent = `
+        <div class="nsf-box">
+          <strong>TARGET FUNDING OPPORTUNITY:</strong> ${selectedGrant.agencyOrOrg} — ${selectedGrant.title}<br/>
+          <strong>FUNDING CATEGORY:</strong> ${selectedGrant.category} | <strong>AMOUNT REQUESTED:</strong> ${fundingAmountRequested}<br/>
+          <strong>INVESTIGATOR & TECHNICAL TEAM:</strong> ${leadApplicant} (Principal Concept Lead), ${engineeringLead} (Hardware & AFE Lead), ${projectManagerLead} (Operations Lead)
+        </div>
+
+        <h2>1. Vision and Goals</h2>
+        <p>The ONMOTIO initiative (<em>Ms. Heavy Metal Leaf Project</em>) establishes an innovative biohybrid paradigm for automated environmental sensing and remediation: <strong>growing functional electronic and biological sensing architectures within living hyperaccumulator plants instead of extracting scarce metals from the Earth.</strong></p>
+        <p>Conventional environmental sensor networks rely extensively on open-pit mined minerals, rare-earth conductors, and toxic battery chemistries that aggravate ecological degradation. Simultaneously, post-industrial brownfields, mine tailings, and urban stormwater retention swales remain dangerously saturated with toxic heavy metals (lead, cadmium, nickel, and arsenic).</p>
+        <p>ONMOTIO integrates hyperaccumulator biology (<em>Brassica juncea</em>, <em>Odontarrhena bertolonii</em>) with precision low-noise electronic instrumentation. The living plant acts simultaneously as a biological remediation filter and as the primary environmental transducer. By capturing the plant’s physiological, hydraulic, and extracellular biopotential responses through custom analog front-ends, ONMOTIO converts living organism stress into calibrated, real-time environmental intelligence.</p>
+        <p><strong>Note on Form Factor & Optimization (Founder Dawn):</strong> Ms. Heavy Metal Leaf's humanoid depiction was Dawn's initial aesthetic vision—serving as a symbolic, empathic bridge between plant life, human stewardship, cybernetic instrumentation, and myth. However, for physical deployment and engineering optimization, her physical shape can be freely altered and re-engineered: adapting into modular floating wetland rafts, vertical riparian cascades, or fractal root geometries to maximize fluid dynamics, phytomining kinetics, and environmental sensing yield.</p>
+
+        <div class="nsf-box merit">
+          <h2>2. Intellectual Merit</h2>
+          <p>The proposed research advances scientific understanding across cybernetic botany, bio-electrophysiology, and phytomining by establishing repeatable, quantifiable mathematical relationships between rhizosphere heavy metal ionic activity and extracellular plant biopotential ($V_{bio}$).</p>
+          <p>In Phase 0 preliminary baseline trials, the research team established an objective Pearson correlation index ($r = +0.89$) between soil volumetric water content and petiole elevation deflection, accompanied by a rapid $+17^\circ$ mechanical recovery within 90 minutes post-watering. Furthermore, rhizosphere acidification below pH 6.3 increased tissue nickel translocation to 382 ppm ($r = -0.84$), accompanied by measurable baseline membrane depolarization waves.</p>
+          <p>By engineering an Analog Front-End (AFE) featuring ultra-high input impedance (&gt; 10¹² Ω) with Texas Instruments INA128 instrumentation amplifiers and active 50/60 Hz mains notch filtering, the system captures sub-millivolt physiological signals without loading or injuring living plant tissue.</p>
+        </div>
+
+        <div class="nsf-box impacts">
+          <h2>3. Broader Impacts</h2>
+          <p>The outcomes of this research transform ecological remediation and circular manufacturing. Demonstrating that functional circuit pathways and structural nodes can be grown within living plant scaffolds provides a sustainable blueprint for phasing out mined metallic components.</p>
+          <p>Deployable floating wetland and terrestrial sentinels offer municipal water authorities—including the Washington State Department of Ecology and Puget Sound recovery initiatives—an affordable, solar-autonomous early-warning network for toxic metal runoff.</p>
+        </div>
+
+        <h2>4. 12-Month Work Plan & Deliverables</h2>
+        <ul>
+          <li><strong>Months 1–3:</strong> Complete breadboard Analog Front-End fabrication; capture synchronized biopotential and leaf deflection time-series under variable stress.</li>
+          <li><strong>Months 4–6:</strong> Construct automated indoor hydroponic test bench with calibrated micro-dosing of heavy metal salts (0.1–10 ppm Cadmium / Nickel).</li>
+          <li><strong>Months 7–9:</strong> Design and fabricate 4-layer custom PCB integrating AFE, ESP32-S3, and MPPT solar charging controller.</li>
+          <li><strong>Months 10–12:</strong> Deploy 3 autonomous pilot nodes on an urban post-industrial contaminated plot for 60-day continuous field monitoring.</li>
+        </ul>
+
+        <h2>5. Budget Justification (${fundingAmountRequested})</h2>
+        <table>
+          <thead>
+            <tr><th>Category</th><th>Description</th><th>Allocation</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Hardware & PCB Prototyping</td><td>Precision AFE components (INA128, ADS1115), PCB fabrication, Ag/AgCl electrodes</td><td>$4,850</td></tr>
+            <tr><td>Growth & Dosing Chamber</td><td>Controlled hydroponic growth chamber, peristaltic dosing pumps, analytical test kits</td><td>$6,200</td></tr>
+            <tr><td>Embedded Firmware & DAQ</td><td>Signal processing algorithms, local SD card circular buffering, edge correlation telemetry</td><td>$6,500</td></tr>
+            <tr><td>Biological Reagents & Plant Stock</td><td>Certified seeds (Brassica juncea), trace metal standards, high-purity agar hydrogels</td><td>$2,450</td></tr>
+            <tr><td>Field Site Deployment & Testing</td><td>Weatherproof IP67 enclosures, solar harvesting film, site permissions</td><td>$3,500</td></tr>
+            <tr><td>Open Science & Dissemination</td><td>Open-source documentation, technical report preparation, repository hosting</td><td>$1,500</td></tr>
+            <tr><td><strong>Total Requested</strong></td><td><strong>Direct Research Costs</strong></td><td><strong>$25,000</strong></td></tr>
+          </tbody>
+        </table>
+
+        <div class="footer-note">
+          CONFIDENTIAL • PREPARED IN ACCORDANCE WITH NSF PAPPG FORMATTING (8.5x11" LETTER, 1-INCH MARGINS, 10PT FONT)
+        </div>
+      `;
+
+      const response = await fetch('/generate-nsf-pdf', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          title: `NSF PROJECT DESCRIPTION: ${projectTitle}`,
+          htmlContent
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error(`Server returned status ${response.status}: ${response.statusText}`);
+      }
+
+      const blob = await response.blob();
+      const downloadUrl = window.URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = downloadUrl;
+      link.download = `NSF_${selectedGrant.id.replace(/-/g, '_')}_Description.pdf`;
+      document.body.appendChild(link);
+      link.click();
+      window.URL.revokeObjectURL(downloadUrl);
+      document.body.removeChild(link);
+    } catch (err) {
+      console.error('PDF Generation failed:', err);
+      alert('PDF generation error: ' + (err as Error).message);
+    } finally {
+      setIsGeneratingPdf(false);
+    }
+  };
+
+  const handleCopyCurl = () => {
+    const curlCmd = `curl -X POST http://localhost:3000/generate-nsf-pdf \\
+  -H "Content-Type: application/json" \\
+  -d '{
+    "title": "NSF PROJECT DESCRIPTION: ${projectTitle}",
+    "htmlContent": "<h2>1. Vision and Goals</h2><p>ONMOTIO grows electronic sensing architecture from living plants.</p><h2>2. Intellectual Merit</h2><p>Electrophysiological biopotential correlation with metal uptake.</p><h2>3. Broader Impacts</h2><p>Stormwater remediation and non-extractive circular electronics.</p>"
+  }' \\
+  --output NSF_Project_Description.pdf`;
+    navigator.clipboard.writeText(curlCmd);
+    setCopiedCurl(true);
+    setTimeout(() => setCopiedCurl(false), 2500);
+  };
+
   const handleDownloadMarkdown = () => {
     downloadTextFile(
       generateFullProposalMarkdown(),
@@ -166,13 +276,33 @@ ONMOTIO is committed to open hardware standards for core environmental monitorin
           </p>
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center flex-wrap gap-2">
+          {/* NSF-Compliant PDF Button */}
+          <button
+            onClick={handleGenerateNsfPdf}
+            disabled={isGeneratingPdf}
+            className="flex items-center gap-1.5 px-3.5 py-2 text-xs font-semibold rounded-xl bg-emerald-500 text-slate-950 hover:bg-emerald-400 transition-colors shadow-md cursor-pointer disabled:opacity-50"
+            title="Generate & download official NSF-compliant PDF (8.5x11 Letter, 1-inch margins, running footer)"
+          >
+            {isGeneratingPdf ? (
+              <>
+                <Loader2 className="w-4 h-4 animate-spin" />
+                <span>Rendering PDF...</span>
+              </>
+            ) : (
+              <>
+                <FileCheck className="w-4 h-4" />
+                <span>Download NSF-Compliant PDF</span>
+              </>
+            )}
+          </button>
+
           <button
             onClick={handleCopyProposal}
             className="flex items-center gap-1.5 px-3.5 py-2 text-xs font-semibold rounded-xl bg-amber-500 text-slate-950 hover:bg-amber-400 transition-colors shadow-md cursor-pointer"
           >
             {copied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
-            <span>{copied ? 'Copied to Clipboard!' : 'Copy Full Proposal'}</span>
+            <span>{copied ? 'Copied to Clipboard!' : 'Copy Markdown'}</span>
           </button>
           
           <button
@@ -419,6 +549,106 @@ ONMOTIO is committed to open hardware standards for core environmental monitorin
             </div>
           </div>
 
+        </div>
+
+        {/* NSF PAPPG Compliance & Automated PDF Engine Card */}
+        <div className="p-5 rounded-2xl bg-slate-950 border border-emerald-500/30 space-y-4 shadow-xl">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-800/80 pb-3">
+            <div>
+              <div className="flex items-center gap-2">
+                <span className="px-2 py-0.5 text-[10px] font-mono font-bold uppercase rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+                  NSF PAPPG Standards
+                </span>
+                <span className="text-xs text-slate-400 font-mono">Headless Playwright PDF Engine</span>
+              </div>
+              <h3 className="text-sm sm:text-base font-bold text-white mt-1 flex items-center gap-2">
+                <FileCheck className="w-4 h-4 text-emerald-400" />
+                <span>Automated NSF-Compliant PDF Generator (/generate-nsf-pdf)</span>
+              </h3>
+            </div>
+
+            <div className="flex items-center gap-2">
+              <button
+                onClick={handleGenerateNsfPdf}
+                disabled={isGeneratingPdf}
+                className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 text-xs font-bold transition-all shadow-md cursor-pointer disabled:opacity-50"
+              >
+                {isGeneratingPdf ? (
+                  <>
+                    <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                    <span>Generating PDF...</span>
+                  </>
+                ) : (
+                  <>
+                    <Download className="w-3.5 h-3.5" />
+                    <span>Download Official PDF</span>
+                  </>
+                )}
+              </button>
+            </div>
+          </div>
+
+          {/* Compliance Checklist Grid */}
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 text-xs font-mono">
+            <div className="p-2.5 rounded-lg bg-slate-900 border border-slate-800">
+              <span className="text-slate-500 block text-[10px]">PAPER FORMAT</span>
+              <span className="text-emerald-400 font-bold">8.5" x 11" Letter</span>
+            </div>
+            <div className="p-2.5 rounded-lg bg-slate-900 border border-slate-800">
+              <span className="text-slate-500 block text-[10px]">MINIMUM MARGINS</span>
+              <span className="text-emerald-400 font-bold">1.0 Inch (All Sides)</span>
+            </div>
+            <div className="p-2.5 rounded-lg bg-slate-900 border border-slate-800">
+              <span className="text-slate-500 block text-[10px]">TYPOGRAPHY</span>
+              <span className="text-emerald-400 font-bold">Arial / Helvetica ≥10pt</span>
+            </div>
+            <div className="p-2.5 rounded-lg bg-slate-900 border border-slate-800">
+              <span className="text-slate-500 block text-[10px]">PAGINATION</span>
+              <span className="text-emerald-400 font-bold">Two-Pass "Page X of Y"</span>
+            </div>
+          </div>
+
+          {/* Terminal / cURL Integration Snippet */}
+          <div className="space-y-2">
+            <div className="flex items-center justify-between text-xs">
+              <span className="text-slate-400 font-mono flex items-center gap-1.5">
+                <Terminal className="w-3.5 h-3.5 text-cyan-400" />
+                <span>REST API Endpoint (Direct Terminal / CI/CD Access):</span>
+              </span>
+              <button
+                onClick={handleCopyCurl}
+                className="flex items-center gap-1 text-[11px] font-mono text-cyan-400 hover:text-cyan-300 cursor-pointer"
+              >
+                {copiedCurl ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
+                <span>{copiedCurl ? 'Copied cURL!' : 'Copy cURL Command'}</span>
+              </button>
+            </div>
+
+            <div className="p-3 rounded-xl bg-slate-900/90 border border-slate-800 font-mono text-[11px] text-slate-300 overflow-x-auto">
+              <div className="text-slate-500 select-none"># Execute in terminal or automated pipeline to download compliant PDF:</div>
+              <div className="text-emerald-400 mt-1">
+                curl -X POST http://localhost:3000/generate-nsf-pdf \
+              </div>
+              <div className="text-emerald-400 pl-4">
+                -H "Content-Type: application/json" \
+              </div>
+              <div className="text-emerald-400 pl-4">
+                -d '&#123;
+              </div>
+              <div className="text-slate-300 pl-8">
+                "title": "PROJECT DESCRIPTION: {projectTitle.slice(0, 45)}...",
+              </div>
+              <div className="text-slate-300 pl-8">
+                "htmlContent": "&lt;h2&gt;1. Vision and Goals&lt;/h2&gt;&lt;p&gt;...&lt;/p&gt;&lt;h2&gt;2. Intellectual Merit&lt;/h2&gt;&lt;p&gt;...&lt;/p&gt;&lt;h2&gt;3. Broader Impacts&lt;/h2&gt;&lt;p&gt;...&lt;/p&gt;"
+              </div>
+              <div className="text-emerald-400 pl-4">
+                &#125;' \
+              </div>
+              <div className="text-amber-400 pl-4">
+                --output NSF_Project_Description.pdf
+              </div>
+            </div>
+          </div>
         </div>
 
         {/* Bottom Actions */}

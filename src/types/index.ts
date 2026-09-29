@@ -1,4 +1,6 @@
 export type ActiveTab = 
+  | 'dashboard'
+  | 'analytics'
   | 'observations'
   | 'simulator'
   | 'architecture'
@@ -21,6 +23,10 @@ export interface PlantObservation {
   lightLux: number;
   soilMoisturePct: number;
   soilEcUscm?: number;
+  pH: number; // Rhizosphere / Hydroponic solution pH (e.g. 5.5 - 7.5)
+  metalUptakePpm: number; // Target heavy metal concentration in tissue (ppm)
+  targetMetal?: string; // Primary metal tracked, e.g. 'Nickel (Ni)', 'Cadmium (Cd)', 'Zinc (Zn)'
+  biopotentialMv?: number; // Extracellular tissue biopotential in mV
   leafAngleDeg: number; // 0 = horizontal, +45 = upright (turgid), -30 = wilting drooping
   stemHeightMm: number;
   stressScore: number; // 1 (optimal vibrant) to 5 (severe stress/wilting)

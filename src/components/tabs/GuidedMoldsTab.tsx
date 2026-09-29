@@ -78,6 +78,24 @@ export const GuidedMoldsTab: React.FC = () => {
         </div>
       </div>
 
+      {/* Morphological Optimization Note */}
+      <div className="p-4 rounded-xl bg-gradient-to-r from-amber-950/40 via-slate-900 to-cyan-950/40 border border-amber-500/30 flex items-start gap-3">
+        <Sparkles className="w-5 h-5 text-amber-400 shrink-0 mt-0.5" />
+        <div className="space-y-1 text-xs">
+          <div className="flex items-center gap-2">
+            <span className="font-mono font-bold text-amber-300 uppercase tracking-wide">
+              Morphology & Optimization Strategy — Dawn (Founder)
+            </span>
+            <span className="text-[10px] px-1.5 py-0.5 rounded bg-amber-500/10 text-amber-400 font-mono">
+              Form Follows Ecology
+            </span>
+          </div>
+          <p className="text-slate-300 italic font-serif leading-relaxed">
+            "While Ms. Heavy Metal Leaf was first envisioned as a humanoid avatar to symbolize the bridge between plant biology, human intention, robotics, and myth, <strong>her physical structure is altered and customized for real-world environmental optimization</strong>. The guided growth molds below reshape plant tissues into non-humanoid geometries—hydrodynamic floating bio-rafts, vertical soil columns, and fractal aeroponic scaffolds—to achieve maximum pollutant filtration and metal mineralization yield."
+          </p>
+        </div>
+      </div>
+
       {/* 3 Modular Housings Switcher (Land, Water, Air) */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         

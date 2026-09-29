@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { ActiveTab, PlantObservation } from './types';
 import { INITIAL_OBSERVATIONS } from './data/mockData';
 import { Header } from './components/Header';
+import { ProjectManifestoHero } from './components/ProjectManifestoHero';
+import { DashboardTab } from './components/tabs/DashboardTab';
+import { BioCorrelationAnalyticsTab } from './components/tabs/BioCorrelationAnalyticsTab';
 import { ObservationTrackerTab } from './components/tabs/ObservationTrackerTab';
 import { SignalSimulatorTab } from './components/tabs/SignalSimulatorTab';
 import { ArchitectureExplorerTab } from './components/tabs/ArchitectureExplorerTab';
@@ -13,7 +16,7 @@ import { exportToCsv } from './utils/analysis';
 import { Sprout, ExternalLink, ShieldCheck, Heart } from 'lucide-react';
 
 export default function App() {
-  const [activeTab, setActiveTab] = useState<ActiveTab>('observations');
+  const [activeTab, setActiveTab] = useState<ActiveTab>('dashboard');
   const [observations, setObservations] = useState<PlantObservation[]>(() => {
     try {
       const saved = localStorage.getItem('onmotio_observations');
@@ -62,6 +65,24 @@ export default function App() {
 
       {/* Main Content Area */}
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
+        
+        {/* Project Vision & Realization Roadmap Manifesto */}
+        <ProjectManifestoHero onNavigateTab={(tab) => setActiveTab(tab)} />
+
+        {activeTab === 'dashboard' && (
+          <DashboardTab
+            observations={observations}
+            onNavigateToLog={() => setActiveTab('observations')}
+          />
+        )}
+
+        {activeTab === 'analytics' && (
+          <BioCorrelationAnalyticsTab
+            observations={observations}
+            onNavigateToLog={() => setActiveTab('observations')}
+          />
+        )}
+
         {activeTab === 'observations' && (
           <ObservationTrackerTab
             observations={observations}

@@ -41,6 +41,10 @@ export const ObservationTrackerTab: React.FC<ObservationTrackerTabProps> = ({
   const [lightLux, setLightLux] = useState(8500);
   const [soilMoisturePct, setSoilMoisturePct] = useState(50);
   const [soilEcUscm, setSoilEcUscm] = useState(320);
+  const [pH, setPH] = useState(6.3);
+  const [metalUptakePpm, setMetalUptakePpm] = useState(180);
+  const [targetMetal, setTargetMetal] = useState('Nickel (Ni)');
+  const [biopotentialMv, setBiopotentialMv] = useState(-28);
   const [leafAngleDeg, setLeafAngleDeg] = useState(35);
   const [stemHeightMm, setStemHeightMm] = useState(70);
   const [stressScore, setStressScore] = useState(1);
@@ -88,6 +92,10 @@ export const ObservationTrackerTab: React.FC<ObservationTrackerTabProps> = ({
       lightLux: Number(lightLux),
       soilMoisturePct: Number(soilMoisturePct),
       soilEcUscm: Number(soilEcUscm),
+      pH: Number(pH),
+      metalUptakePpm: Number(metalUptakePpm),
+      targetMetal,
+      biopotentialMv: Number(biopotentialMv),
       leafAngleDeg: Number(leafAngleDeg),
       stemHeightMm: Number(stemHeightMm),
       stressScore: Number(stressScore),
@@ -415,7 +423,7 @@ export const ObservationTrackerTab: React.FC<ObservationTrackerTabProps> = ({
                 </div>
 
                 {/* Metrics Grid */}
-                <div className="grid grid-cols-4 gap-2 text-center bg-slate-950/60 p-2.5 rounded-lg border border-slate-800/60 text-xs">
+                <div className="grid grid-cols-3 sm:grid-cols-6 gap-2 text-center bg-slate-950/60 p-2.5 rounded-lg border border-slate-800/60 text-xs">
                   <div>
                     <span className="text-[10px] text-slate-500 block">Temp / RH</span>
                     <span className="font-mono text-slate-200 font-medium">{obs.temperatureC}°C</span>
@@ -430,6 +438,16 @@ export const ObservationTrackerTab: React.FC<ObservationTrackerTabProps> = ({
                     <span className="text-[10px] text-slate-500 block">Soil VWC</span>
                     <span className="font-mono text-cyan-400 font-medium">{obs.soilMoisturePct}%</span>
                     <span className="text-[10px] text-slate-400 block font-mono">{obs.soilEcUscm ?? 300} µS</span>
+                  </div>
+                  <div>
+                    <span className="text-[10px] text-slate-500 block">Rhizosphere pH</span>
+                    <span className="font-mono text-cyan-300 font-bold">{obs.pH ?? 6.4}</span>
+                    <span className="text-[10px] text-slate-400 block font-mono">pH</span>
+                  </div>
+                  <div>
+                    <span className="text-[10px] text-slate-500 block">Metal Uptake</span>
+                    <span className="font-mono text-emerald-400 font-bold">{obs.metalUptakePpm ?? 0}</span>
+                    <span className="text-[10px] text-emerald-300/80 block font-mono">{obs.targetMetal ? obs.targetMetal.split(' ')[0] : 'ppm'}</span>
                   </div>
                   <div>
                     <span className="text-[10px] text-slate-500 block">Leaf Angle</span>
@@ -603,6 +621,62 @@ export const ObservationTrackerTab: React.FC<ObservationTrackerTabProps> = ({
                       <option value="4">4 - Severe Drought Stress</option>
                       <option value="5">5 - Senescence / Necrosis</option>
                     </select>
+                  </div>
+                </div>
+              </div>
+
+              {/* Biogeochemical & Electrophysiology Layer */}
+              <div className="p-3 bg-slate-950/70 rounded-xl border border-slate-800/80 space-y-3">
+                <span className="font-semibold text-purple-400 uppercase tracking-wider text-[11px] block">
+                  3. Biogeochemical & Electrophysiology Layer
+                </span>
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                  <div>
+                    <label className="block text-slate-400 mb-0.5">Rhizosphere pH</label>
+                    <input
+                      type="number"
+                      step="0.1"
+                      min="4.0"
+                      max="9.0"
+                      value={pH}
+                      onChange={e => setPH(parseFloat(e.target.value))}
+                      className="w-full bg-slate-900 border border-slate-800 rounded px-2 py-1 text-white font-mono"
+                    />
+                    <span className="text-[10px] text-slate-500">Optimum: 5.8-6.5</span>
+                  </div>
+                  <div>
+                    <label className="block text-slate-400 mb-0.5">Metal Uptake (ppm)</label>
+                    <input
+                      type="number"
+                      value={metalUptakePpm}
+                      onChange={e => setMetalUptakePpm(parseFloat(e.target.value))}
+                      className="w-full bg-slate-900 border border-slate-800 rounded px-2 py-1 text-white font-mono"
+                    />
+                    <span className="text-[10px] text-slate-500">Shoot tissue ppm</span>
+                  </div>
+                  <div>
+                    <label className="block text-slate-400 mb-0.5">Target Metal</label>
+                    <select
+                      value={targetMetal}
+                      onChange={e => setTargetMetal(e.target.value)}
+                      className="w-full bg-slate-900 border border-slate-800 rounded px-2 py-1 text-white text-xs"
+                    >
+                      <option value="Nickel (Ni)">Nickel (Ni)</option>
+                      <option value="Cadmium (Cd)">Cadmium (Cd)</option>
+                      <option value="Zinc (Zn)">Zinc (Zn)</option>
+                      <option value="Lead (Pb)">Lead (Pb)</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label className="block text-slate-400 mb-0.5">Biopotential V_bio (mV)</label>
+                    <input
+                      type="number"
+                      step="0.1"
+                      value={biopotentialMv}
+                      onChange={e => setBiopotentialMv(parseFloat(e.target.value))}
+                      className="w-full bg-slate-900 border border-slate-800 rounded px-2 py-1 text-white font-mono"
+                    />
+                    <span className="text-[10px] text-slate-500">Extracellular mV</span>
                   </div>
                 </div>
               </div>
