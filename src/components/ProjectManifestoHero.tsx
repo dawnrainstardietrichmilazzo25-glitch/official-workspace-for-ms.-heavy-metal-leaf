@@ -16,7 +16,9 @@ import {
   Globe2, 
   CheckCircle2, 
   Users, 
-  Box
+  Box,
+  Bot,
+  Image as ImageIcon
 } from 'lucide-react';
 import { ActiveTab } from '../types';
 
@@ -55,14 +57,23 @@ export const ProjectManifestoHero: React.FC<ProjectManifestoHeroProps> = ({ onNa
           </div>
         </div>
 
-        <div className="flex items-center gap-2 self-start md:self-auto shrink-0">
+        <div className="flex items-center gap-2 self-start md:self-auto shrink-0 flex-wrap">
+          <button
+            onClick={() => onNavigateTab('assistant')}
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-indigo-500 hover:bg-indigo-400 text-slate-950 text-xs font-bold transition-all shadow-md cursor-pointer"
+            title="Chat directly with the ONMOTIO AI Co-Scientist"
+          >
+            <Bot className="w-3.5 h-3.5" />
+            <span>Ask AI Co-Scientist</span>
+          </button>
+
           <button
             onClick={() => setIsExpanded(!isExpanded)}
             className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-medium border border-slate-700 transition-colors cursor-pointer"
           >
             {isExpanded ? (
               <>
-                <span>Collapse Overview</span>
+                <span>Collapse</span>
                 <ChevronUp className="w-3.5 h-3.5 text-slate-400" />
               </>
             ) : (
@@ -181,6 +192,69 @@ export const ProjectManifestoHero: React.FC<ProjectManifestoHeroProps> = ({ onNa
                   </li>
                 </ul>
               </div>
+            </div>
+          </div>
+
+          {/* Prototype Visions & Concept Art Gallery (9 Studies by Dawn) */}
+          <div className="pt-4 border-t border-slate-800/80 space-y-3">
+            <div className="flex items-center justify-between flex-wrap gap-2">
+              <div className="flex items-center gap-2 text-cyan-400 font-mono font-semibold text-xs uppercase tracking-wider">
+                <ImageIcon className="w-4 h-4" />
+                <span>Prototype Visions & Concept Studies (Dawn’s 9 Morphological Blueprints)</span>
+              </div>
+              <button
+                onClick={() => onNavigateTab('blueprints')}
+                className="text-xs font-mono text-cyan-400 hover:text-cyan-300 flex items-center gap-1 cursor-pointer"
+              >
+                <span>Open Full Blueprint Studio</span>
+                <ArrowRight className="w-3 h-3" />
+              </button>
+            </div>
+
+            <p className="text-xs text-slate-300">
+              Explore Dawn's 9 visual studies demonstrating living plant biobots, in-situ soil circuit slabs, modular CAD molds, and aerial canopy guardians:
+            </p>
+
+            {/* Horizontal Scrollable / Grid Gallery */}
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 pt-1">
+              {[
+                { title: 'Living Plant Biobot', file: '/prototypes/plant_biobot.jpg', cat: 'Living Bio-Hybrid' },
+                { title: 'Grown Circuit Tablet', file: '/prototypes/grown_tablet.jpg', cat: 'Grown Circuitry' },
+                { title: 'Field CAD Architecture', file: '/prototypes/dawn_field_cad.jpg', cat: 'CAD Molds' },
+                { title: 'Modular Soil Blocks', file: '/prototypes/scientist_modular.jpg', cat: 'Phase 1 Modularity' },
+                { title: 'Biohybrid Agro-Farm', file: '/prototypes/phytomining_landscape.jpg', cat: 'Full System' },
+                { title: 'Phytomining Harvest', file: '/prototypes/phytomining_harvest.jpg', cat: 'Bio-Ore Recovery' },
+                { title: 'Machine Forest Guardian', file: '/prototypes/guardian_machine_forest.jpg', cat: 'Solar Aerial Sentinel' },
+                { title: 'Mythic Bridge of Worlds', file: '/prototypes/mythic_bridge.jpg', cat: 'Cultural Synthesis' },
+                { title: 'Industrial Ruin Cloche', file: '/prototypes/bridge_terrarium.jpg', cat: 'Field Sentinel' }
+              ].map((p, idx) => (
+                <div
+                  key={idx}
+                  onClick={() => onNavigateTab('blueprints')}
+                  className="rounded-xl overflow-hidden border border-slate-800 hover:border-cyan-400 bg-slate-950 group cursor-pointer transition-all shadow-md flex flex-col"
+                >
+                  <div className="relative h-28 overflow-hidden bg-slate-900">
+                    <img
+                      src={p.file}
+                      alt={p.title}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                      referrerPolicy="no-referrer"
+                    />
+                    <span className="absolute top-1.5 left-1.5 text-[9px] font-mono px-1.5 py-0.5 rounded bg-slate-950/80 text-cyan-300 border border-slate-800 backdrop-blur-sm">
+                      {p.cat}
+                    </span>
+                  </div>
+                  <div className="p-2 flex-1 flex flex-col justify-between">
+                    <span className="text-[11px] font-bold text-white group-hover:text-cyan-300 line-clamp-1">
+                      {p.title}
+                    </span>
+                    <span className="text-[10px] font-mono text-slate-500 mt-1 flex items-center justify-between">
+                      <span>Inspect</span>
+                      <span>→</span>
+                    </span>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
 

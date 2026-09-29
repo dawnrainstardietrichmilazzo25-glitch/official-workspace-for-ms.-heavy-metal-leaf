@@ -9,6 +9,7 @@ import { ObservationTrackerTab } from './components/tabs/ObservationTrackerTab';
 import { SignalSimulatorTab } from './components/tabs/SignalSimulatorTab';
 import { ArchitectureExplorerTab } from './components/tabs/ArchitectureExplorerTab';
 import { GuidedMoldsTab } from './components/tabs/GuidedMoldsTab';
+import { AiResearchAssistantTab } from './components/tabs/AiResearchAssistantTab';
 import { GrantDossierTab } from './components/tabs/GrantDossierTab';
 import { PhytominingDatabaseTab } from './components/tabs/PhytominingDatabaseTab';
 import { CollaborationLogTab } from './components/tabs/CollaborationLogTab';
@@ -74,6 +75,10 @@ export default function App() {
             observations={observations}
             onNavigateToLog={() => setActiveTab('observations')}
           />
+        )}
+
+        {activeTab === 'assistant' && (
+          <AiResearchAssistantTab />
         )}
 
         {activeTab === 'analytics' && (

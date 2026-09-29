@@ -420,67 +420,175 @@ export const GRANT_OPPORTUNITIES: GrantOpportunity[] = [
 
 export const BLUEPRINT_ARTIFACTS: BlueprintArtifact[] = [
   {
-    id: 'bp-cad-mold',
-    title: 'Guided-Growth Mold CAD Architecture',
-    filename: '_2_Guided_Growth_Mold_CAD_Concept_PromptCAD-style_concept_ar.jpg',
-    category: 'CAD Guided Growth Mold',
-    fileSize: '594.32 kB',
+    id: 'bp-plant-biobot',
+    title: 'Living Plant-Grown Cybernetic Biobot Prototype',
+    filename: 'The_Core_Concept_What_Ms_Heavy_Metal_Leaf_IsA_Living_Plant-G.jpg',
+    category: 'Living Bio-Hybrid',
+    fileSize: '941 kB',
     housingType: 'terrestrial',
-    promptDescription: 'CAD-style concept architecture showing precision guided molds that constrain root and vascular xylem growth into conductive micro-channels.',
+    imageUrl: '/prototypes/plant_biobot.jpg',
+    visionTheme: 'Living Plant-Machine Integration on Toxic Slag',
+    founderQuote: 'Not a mannequin with plants glued on—an actual living hyperaccumulator whose roots and vascular tissue grow directly through mechanical and electronic guiding structures.',
+    promptDescription: 'Living Indian mustard (Brassica juncea) plant rooted in industrial mine tailings, with copper-patina cybernetic articulated limbs growing directly from its crown and root conduits.',
     technicalSpecs: [
-      'Biocompatible SLA resin / 3D-printed microfluidic guiding channels (0.8mm internal diameter)',
-      'Perforated aeration slots allowing lateral nutrient diffusion without root constriction',
-      'Embedded recessed electrode contacts directly interfacing with channeled xylem traces',
-      'Removable two-part clam-shell design for non-destructive inspection'
+      'Living root mass actively uptakes Cd, Ni, and Zn from post-industrial slag',
+      'Non-constricting copper-patina exoskeleton supporting vascular transpiration pull',
+      'Direct root-to-chassis electrophysiological biopotential measurement nodes',
+      'Demonstrates living plant growth with integrated mechanical stability under toxic stress'
     ],
-    moldGuidelines: 'Core innovation: Prove that metal-bearing vascular structures can be grown into geometric circuit shapes rather than mined and etched.'
+    moldGuidelines: 'Living biohybrid proof-of-concept proving plant survival and simultaneous sensor integration.'
   },
   {
-    id: 'bp-phase1-arch',
-    title: 'Minimalist Phase 1 Architecture Blueprint',
-    filename: '6_Minimalist_Blueprint_Phase_1_Architecture_PromptMinimalist.jpg',
-    category: 'Phase 1 Architecture',
-    fileSize: '466.99 kB',
-    housingType: 'terrestrial',
-    promptDescription: 'Minimalist technical blueprint detailing the complete modular interconnect of the bio-sensing node, solar film, and telemetry bus.',
-    technicalSpecs: [
-      'Layered modular stack: Soil/water interface base, AFE shield layer, processing core, solar cowl',
-      'Isolated high-impedance guard traces minimizing parasitic capacitance (< 2 pF)',
-      'Sub-15µA deep-sleep power rail architecture with momentary wake-to-sample duty cycle',
-      'Quick-release sensor cartridge for interchangeable plant species'
-    ],
-    moldGuidelines: 'Ensures strict compliance with Washington Water Quality non-construction criteria: lightweight, portable, deployable.'
-  },
-  {
-    id: 'bp-full-sys-proto',
-    title: 'Full System Early Prototype Visualization',
-    filename: '_5_Full_System_Concept_Early_Prototype_Visualization_PromptE.jpg',
-    category: 'Full System Prototype',
-    fileSize: '530.85 kB',
+    id: 'bp-grown-tablet',
+    title: 'Grown Biological Circuit Tablet & Wetland Network',
+    filename: 'Around_Ms_Heavy_Metal_Leaf_are_visual_demonstrations_of_the (3).jpg',
+    category: 'Grown Circuitry',
+    fileSize: '1.4 MB',
     housingType: 'aquatic_floating',
-    promptDescription: 'Early prototype visualization of Ms. Heavy Metal Leaf operating as a floating stormwater wetland sentinel in contaminated urban runoff.',
+    imageUrl: '/prototypes/grown_tablet.jpg',
+    visionTheme: 'Vascular Mineralization & Circuit Fabrication',
+    founderQuote: 'Growing functional electronics and living logic boards from plants rather than extracting rare-earth minerals from the earth.',
+    promptDescription: 'Ms. Heavy Metal Leaf holding a living plant-grown circuit tablet with green sprouts and illuminated traces, flanked by soil cross-sections and biohybrid crawler sentinels.',
     technicalSpecs: [
-      'Hydrophobic buoyant collar engineered for retention ponds, stormwater swales, and Puget Sound estuaries',
-      'Suspended root cradle allowing direct contact with heavy metal contaminated water column',
-      'Thin-film photovoltaic umbrella supplying uninterrupted autonomous solar power',
-      'Wireless mesh antenna transmitting continuous water quality indicators'
+      'Sub-millimeter plant vascular xylem traces mineralized with conductive phytomined metal ions',
+      'Living plant roots supplying continuous bio-electrolytic hydration to logic pathways',
+      'Integration with floating stormwater wetland swales and bio-canal water remediation',
+      'Autonomous micro-sentinels walking along circuit trays to monitor trace resistance'
     ],
-    moldGuidelines: 'Directly tailored for Washington State Combined Water Quality Stormwater Activity Grants and Algae/Nutrient monitoring.'
+    moldGuidelines: 'Core thesis demonstrator: Metal conductors shaped in living tissue through precision geometric guiding molds.'
   },
   {
-    id: 'bp-narrative-composite',
-    title: 'Ms. Heavy Metal Leaf Narrative & Vision Composite',
-    filename: 'create_a_narrative_composite_of_the_ms_HEAVY_METAL_LEAF_the.jpg',
-    category: 'Narrative Concept',
-    fileSize: '507.61 kB',
-    housingType: 'atmospheric',
-    promptDescription: 'Narrative composite illustrating the transformation from open-pit mining degradation to living, self-growing bio-robotic sentinels.',
+    id: 'bp-dawn-field-cad',
+    title: 'Field Researcher Blueprint & Guided Mold Architecture',
+    filename: 'Around_Ms_Heavy_Metal_Leaf_are_visual_demonstrations_of_the (2).jpg',
+    category: 'CAD Guided Growth Mold',
+    fileSize: '1.1 MB',
+    housingType: 'terrestrial',
+    imageUrl: '/prototypes/dawn_field_cad.jpg',
+    visionTheme: 'Architectural Botany & Guided CAD Molds',
+    founderQuote: 'Shaping vascular growth through precision molds to replace manufactured metallic housings with living structural tissue.',
+    promptDescription: 'Field scientist Dawn standing on a stone plinth with copper/patina botanical coat, surrounded by CAD blueprints, soil root cross-sections, and bio-robotic prototypes.',
     technicalSpecs: [
-      'Visualizes the closed-loop cycle: Toxic land -> Phytoremediation -> Phytomining -> Grown Electronics',
-      'Illustrates the ethical imperative of biohybrids replacing toxic lithium/silicon manufacturing',
-      'Aesthetic framework for Bio-Art fellowships and high-impact grant pitch decks'
+      'Precision CAD root-channeling geometries (0.8mm internal diameter) for vascular shaping',
+      'Sub-surface soil stratification modeling for targeted heavy-metal rhizosphere zones',
+      'Multi-species modular plant cassettes engineered for rapid field deployment',
+      'Bio-inspired crawler prototypes for distributed soil sampling across contaminated plots'
     ],
-    moldGuidelines: 'Forms the visual cornerstone of the Creative Capital, Ars Electronica, and Eco-Tech grant submissions.'
+    moldGuidelines: 'Architectural synthesis linking botanical morphology with physical CAD mold fabrication.'
+  },
+  {
+    id: 'bp-scientist-modular',
+    title: 'Modular Phytoremediation Blocks & Root Lattices',
+    filename: 'Around_Ms_Heavy_Metal_Leaf_are_visual_demonstrations_of_the (1).jpg',
+    category: 'Phase 1 Architecture',
+    fileSize: '1.3 MB',
+    housingType: 'terrestrial',
+    imageUrl: '/prototypes/scientist_modular.jpg',
+    visionTheme: 'Modular Infrastructure & Canopy Sentinel',
+    founderQuote: 'Modular living building blocks that slot directly into contaminated plots and stack into bio-architectural filtration towers.',
+    promptDescription: 'Senior female scientist Dawn with field goggles and moss satchel, standing among modular phytoremediation soil blocks with exposed living root lattices and CAD schematics.',
+    technicalSpecs: [
+      'Interlocking modular soil-root blocks for municipal stormwater swales and brownfields',
+      'Living root matrix providing internal structural reinforcement and biological filtration',
+      'Sub-surface moisture and EC sensor channels embedded in modular block boundaries',
+      'Low-power analog front-end telemetry bus connecting stacked blocks into a smart bio-array'
+    ],
+    moldGuidelines: 'Deployable modular form factor compliant with Washington State Water Quality stormwater activity grants.'
+  },
+  {
+    id: 'bp-phytomining-landscape',
+    title: 'Autonomous Biohybrid Agricultural Landscape',
+    filename: 'Around_Ms_Heavy_Metal_Leaf_are_visual_demonstrations_of_the.jpg',
+    category: 'Full System Prototype',
+    fileSize: '1.2 MB',
+    housingType: 'terrestrial',
+    imageUrl: '/prototypes/phytomining_landscape.jpg',
+    visionTheme: 'Macro-Scale Remediation & Sentinel Fleets',
+    founderQuote: 'Vast remediation terraces where plants heal the land while growing the next generation of ecological electronics.',
+    promptDescription: 'Wide panorama of an agro-ecological research farm where hyperaccumulator crops and living circuit boards grow in the soil, tended by biohybrid sentinels.',
+    technicalSpecs: [
+      'Macro-scale terraced planting plots optimized for phytomining heavy metals (Ni, Cd, Zn)',
+      'In-ground living circuit matrices capturing real-time environmental gradients across acres',
+      'Autonomous biohybrid sentinels navigating crop aisles to inspect leaf turgor and petiole angles',
+      'Solar-harvesting canopy towers supplying zero-emission telemetry and irrigation control'
+    ],
+    moldGuidelines: 'Demonstrates scalability from single laboratory growth chamber to multi-acre municipal watershed remediation.'
+  },
+  {
+    id: 'bp-phytomining-harvest',
+    title: 'Circular Phytomining Harvest & Ground-Grown Slabs',
+    filename: 'Core_ThemesPhytoremediationPlants_pulling_heavy_metals_and_t (1).jpg',
+    category: 'Grown Circuitry',
+    fileSize: '1.1 MB',
+    housingType: 'terrestrial',
+    imageUrl: '/prototypes/phytomining_harvest.jpg',
+    visionTheme: 'Phytomining & Metal Bio-Ore Recovery',
+    founderQuote: 'Instead of destructive open-pit mining, we harvest metal-rich biomass to extract bio-ores while leaving the land clean and alive.',
+    promptDescription: 'Agricultural workers harvesting metal-accumulating hyperaccumulator crops near an in-ground grown circuit board slab and glowing bioluminescent water roots.',
+    technicalSpecs: [
+      'High-yield hyperaccumulator biomass harvesting yielding up to 382 ppm tissue nickel',
+      'Earthen in-situ circuit slabs mineralized directly through rhizosphere transpiration pull',
+      'Bioluminescent root-signaling channels tracking localized toxicity thresholds in real time',
+      'Circular manufacturing workflow: contaminated soil -> harvest -> bio-ore smelting -> clean green land'
+    ],
+    moldGuidelines: 'Validates commercial and economic feasibility of bio-ore recovery as an alternative to mining.'
+  },
+  {
+    id: 'bp-guardian-machine-forest',
+    title: 'Guardian of the Machine Forest: Avian Solar Bio-Sentinel',
+    filename: 'Ms_Heavy_Metal_Leaf_the_Guardian_of_the_Machine_Forest_An_im (2).jpg',
+    category: 'Field Sentinel',
+    fileSize: '1.3 MB',
+    housingType: 'atmospheric',
+    imageUrl: '/prototypes/guardian_machine_forest.jpg',
+    visionTheme: 'Biohybrid Robotics & Aerial Canopy Monitoring',
+    founderQuote: 'An autonomous aerial and canopy guardian integrating flexible solar wings with living plant vines to watch over post-industrial forests.',
+    promptDescription: 'Majestic biomechanical guardian goddess with multifaceted solar-cell eyes and articulated mechanical wings draped in living foliage, surrounded by pump schematics.',
+    technicalSpecs: [
+      'Flexible photovoltaic wing arrays supplying continuous energy for aerial sensing and telemetry',
+      'Multifaceted optical sensor cluster capturing atmospheric particulate and aerosolized heavy metals',
+      'Living vine vascular conduit wrapped around lightweight titanium airframe',
+      'Peristaltic micro-pumps providing automated closed-loop nutrient delivery to climbing foliage'
+    ],
+    moldGuidelines: 'Canopy-level biohybrid architecture extending environmental monitoring beyond ground soil into the lower atmosphere.'
+  },
+  {
+    id: 'bp-mythic-bridge',
+    title: 'Mythic Bridge of Worlds: Nature & Cybernetics',
+    filename: 'Ms_Heavy_Metal_Leaf_Mythic_Bridge_of_Worlds_A_stunning_femal (3).jpg',
+    category: 'Narrative Concept',
+    fileSize: '1.1 MB',
+    housingType: 'terrestrial',
+    imageUrl: '/prototypes/mythic_bridge.jpg',
+    visionTheme: 'Cultural & Archetypal Synthesis',
+    founderQuote: 'The avatar who walks the boardwalk between primeval forest wisdom and cybernetic machine architecture—the bridge between worlds.',
+    promptDescription: 'Botanical bronze goddess walking along a wooden boardwalk bridging an ancient primeval mossy forest with a glowing cybernetic machine city.',
+    technicalSpecs: [
+      'Philosophical and artistic centerpiece uniting hyperaccumulator biology with advanced computation',
+      'Empathic narrative anchor for Creative Capital, Ars Electronica, and public science engagement',
+      'Symbolizes the historical inflection point: moving from extractivism to bio-cooperation',
+      'Visual foundation for museum exhibitions, educational workshops, and investor pitch decks'
+    ],
+    moldGuidelines: 'Cultural touchstone communicating the profound ethical and planetary mission of ONMOTIO.'
+  },
+  {
+    id: 'bp-bridge-terrarium',
+    title: 'Industrial Ruin Sentinel & Living Bio-Luminescent Cloche',
+    filename: 'ms_heavy_metal_leaf_she_is_the_bridge_between_machines_plant (2).jpg',
+    category: 'Field Sentinel',
+    fileSize: '890 kB',
+    housingType: 'atmospheric',
+    imageUrl: '/prototypes/bridge_terrarium.jpg',
+    visionTheme: 'Post-Industrial Sentinel & Portable Cloche',
+    founderQuote: 'Carrying living seedling intelligence into abandoned ruins, proving that life and circuitry can flourish together.',
+    promptDescription: 'Female botanist in copper armor leaning over a rusted industrial steel I-beam, holding a glowing spherical glass cloche containing a living seedling with bio-luminescent circuits.',
+    technicalSpecs: [
+      'Portable hermetic micro-climate cloche protecting hyperaccumulator seedling under extreme conditions',
+      'Bio-luminescent circuit root visualization illuminating metabolic stress levels in real time',
+      'Ruggedized copper and composite field chassis built for decommissioned industrial infrastructure',
+      'Autonomous micro-climate environmental telemetry logging ambient VOCs, humidity, and temperature'
+    ],
+    moldGuidelines: 'Field-portable testing unit for preliminary site assessment prior to full sentinel deployment.'
   },
   {
     id: 'bp-heavy-metal-csv',
@@ -489,10 +597,12 @@ export const BLUEPRINT_ARTIFACTS: BlueprintArtifact[] = [
     category: 'Data CSV',
     fileSize: '6.18 kB',
     housingType: 'terrestrial',
+    visionTheme: 'Quantitative Empirical Dataset',
+    founderQuote: 'The science must be rigorous: empirical numbers, real Pearson correlations, and calibrated mV potentials.',
     promptDescription: 'Full structured experimental data table containing time-series metrics, biopotential readings, and multi-metal uptake values.',
     technicalSpecs: [
       '300+ time-stamped experimental rows tracking Cadmium (Cd), Nickel (Ni), Zinc (Zn), and Lead (Pb)',
-      'Simultaneous extracellular biopotential ($V_{bio}$, mV), soil moisture %, and leaf angle deflection',
+      'Simultaneous extracellular biopotential (V_bio, mV), soil moisture %, and leaf angle deflection',
       'Standardized format compatible with R, Python Pandas, and grant technical exhibits'
     ],
     moldGuidelines: 'Quantitative proof-of-concept deliverable demonstrating measurable correlation between biological uptake and electronic signal.'

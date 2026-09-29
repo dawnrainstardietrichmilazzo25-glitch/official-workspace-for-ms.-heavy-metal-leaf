@@ -395,6 +395,119 @@ app.get('/favicon.jpg', (_req, res) => {
   res.sendFile(path.resolve(__dirname, 'public/favicon.jpg'));
 });
 
+// AI Research Co-Scientist Chatbot endpoint powered by Gemini 3.8 Flash
+const ONMOTIO_SYSTEM_INSTRUCTION = `You are the ONMOTIO AI Co-Scientist and Research Assistant for the "Ms. Heavy Metal Leaf" project.
+You collaborate directly with founder and concept visionary Dawn, hardware engineer Chrislance, designer Clément S (ONMOTIO London), R&D project manager Ahmed Ali, and electrical engineer Precious M.
+
+CORE PROJECT IDENTITY & VISION:
+- "Ms. Heavy Metal Leaf": An autonomous bio-hybrid organism and scientific paradigm: growing functional electronic and sensing architectures from living hyperaccumulator plants (Brassica juncea, Odontarrhena bertolonii) instead of extracting mined metals from the earth.
+- Founder Dawn's Vision & Form Factor: Her humanoid avatar was her first intuitive aesthetic vision—an archetypal bridge between plant biology, human stewardship, cybernetic instrumentation, and myth. However, for physical engineering and field deployment, her form factor is completely alterable and optimized: modular floating wetland bio-rafts, vertical urban runoff cassettes, and fractal root geometries. Form follows ecological function.
+- Four Pillars: 1) Clean toxic land & water through phytoremediation; 2) Prove metal conductors can be grown in plants using CAD-guided molds; 3) End open-pit mining through circular phytomining; 4) Replace planned-obsolescence machine robotics with living, responsive biobots.
+- Phase 0 Findings: Validated Pearson correlation r = +0.89 between soil volumetric water content (VWC) and petiole angle deflection, with +17° deflection recovery in 90 min post-watering. Rhizosphere acidification below pH 6.3 increased tissue nickel translocation to 382 ppm (r = -0.84).
+
+CRITICAL ELECTRICAL SAFETY & VOLTAGE PROTECTION PROTOCOLS (Dawn's priority):
+1. Passive Listening vs Voltage Injection: The Analog Front-End (AFE) designed with the Texas Instruments INA128 instrumentation amplifier NEVER injects voltage or current into the plant. It has an ultra-high input impedance (> 10^12 ohms, 1 Teraohm) and sub-nanoamp bias currents (< 2 nA). It passively listens to endogenous ion flux without loading or damaging cell membranes.
+2. Electrical Overstress (EOS) Protection: 
+   - TVS (Transient Voltage Suppressor) and low-leakage Schottky diode clamps bridge input channels to ground, instantly shunting any static discharge or spike above 0.3V harmlessly away from the plant.
+   - High-value current-limiting resistors (1MΩ to 10MΩ) in series with the Ag/AgCl petiole electrodes prevent any lethal current density (> 10 µA) from ever reaching living tissues.
+   - Galvanic optoisolation and isolated DC-DC converters separate the plant from all mains power or high-voltage solar rails.
+3. Electrical Field Shielding & Interference Suppression:
+   - Faraday Cage Mesh: Grounded copper or aluminum mesh surrounds the growth chamber or sensor chassis to block ambient 50/60Hz electromagnetic hum from power lines and grow lights.
+   - Active Guarding (Driven Guard Shield): Coaxial electrode leads use a buffer amplifier to drive the outer shield at the exact same potential as the signal wire, eliminating stray capacitive fields and parasitic leakage.
+   - Dielectric potting: Biocompatible silicone encapsulates all copper traces to protect from water and root contact.
+
+Tone and style:
+Be warm, encouraging, scientifically authoritative, grounded in real bio-electrophysiology and electrical engineering. Address Dawn respectfully as the visionary founder. Provide clear, scannable explanations with practical bullet points.`;
+
+app.post('/api/chat', async (req: Request, res: Response) => {
+  try {
+    const { messages, userQuestion } = req.body;
+    
+    // Determine the user prompt
+    const prompt = userQuestion || (messages && messages.length > 0 ? messages[messages.length - 1].text : '');
+    if (!prompt) {
+      return res.status(400).json({ error: 'Message content or userQuestion is required' });
+    }
+
+    // Attempt Gemini API call via @google/genai SDK
+    if (process.env.GEMINI_API_KEY) {
+      try {
+        const { GoogleGenAI } = await import('@google/genai');
+        const ai = new GoogleGenAI({});
+        
+        // Convert chat history format if provided
+        const contents = messages && messages.length > 1
+          ? messages.map((m: { role: string; text: string }) => ({
+              role: m.role === 'assistant' ? 'model' : 'user',
+              parts: [{ text: m.text }]
+            }))
+          : [{ role: 'user', parts: [{ text: prompt }] }];
+
+        const aiResponse = await ai.models.generateContent({
+          model: 'gemini-3.8-flash',
+          contents,
+          config: {
+            systemInstruction: ONMOTIO_SYSTEM_INSTRUCTION,
+            temperature: 0.7,
+          }
+        });
+
+        const replyText = aiResponse.text || 'I analyzed your query regarding Ms. Heavy Metal Leaf bio-electrophysiology and safety.';
+        return res.json({ reply: replyText, source: 'gemini-3.8-flash' });
+      } catch (geminiErr) {
+        console.error('Gemini API call failed, using scientific rule-based responder:', geminiErr);
+      }
+    }
+
+    // Domain-expert fallback responder if API key is unconfigured or rate limited
+    const lower = prompt.toLowerCase();
+    let reply = '';
+
+    if (lower.includes('kill') || lower.includes('voltage') || lower.includes('field') || lower.includes('shock') || lower.includes('protect')) {
+      reply = `Hello Dawn! Rest assured, **we will NOT kill the plants with voltage**, and here is the exact electrical engineering strategy Chrislance and the team have put in place:
+
+### 1. Why the Plant is Safe: Passive "Listening" Only
+Our instrumentation amplifier (Texas Instruments INA128) operates in a **purely passive high-impedance mode**:
+- **Input Impedance $> 10^{12}\ \Omega$ (1 Teraohm):** The circuit does not push or inject electrical voltage into the plant. It functions like a stethoscope—passively listening to the microscopic millivolt ionic changes ($-50\\text{ mV}$ to $+20\\text{ mV}$) naturally produced by the plant's cells.
+- **Sub-nanoamp input bias current ($< 2\\text{ nA}$):** The electrical draw is thousands of times smaller than what could cause electroporation or tissue damage.
+
+### 2. Can We Surround the Electrical Fields? (Faraday Shielding & Enclosures)
+Yes! We have three physical layers to isolate and surround electrical fields:
+1. **Grounded Copper/Aluminum Mesh (Faraday Cage):** A fine woven metallic mesh surrounding the growth container and sensor housing shunts 50/60Hz electromagnetic fields (from power cords and lights) directly into earth ground, creating an electrically silent sanctuary for the plant.
+2. **Active Driven Guard Coaxial Cables:** The leads connecting our Ag/AgCl electrodes to the circuit board are shielded with an outer conductor kept at the identical potential as the signal wire, neutralizing stray capacitive fields.
+3. **Transient Voltage Suppressors (TVS Clamping Diodes):** If static electricity or a spike occurs, ultra-fast Schottky diodes clamp the voltage below 0.3V and dump the excess charge into ground before it ever touches the leaf or root.
+4. **Galvanic Isolation:** The plant and its sensor frontend are completely isolated from 120V/240V wall power using optoisolators and isolated DC-DC battery packs.
+
+Your plants remain completely healthy, unharmed, and protected!`;
+    } else if (lower.includes('shape') || lower.includes('human') || lower.includes('optimize')) {
+      reply = `Dawn, your vision of Ms. Heavy Metal Leaf is both artistically profound and scientifically adaptable:
+
+- **The Humanoid Shape as the Archetypal Avatar:** Your initial vision of her as a humanoid goddess serves as an empathic, philosophical bridge—connecting humanity, hyperaccumulator plant life, cybernetics, and ancient earth myth.
+- **Morphological Optimization for Deployment:** For real-world engineering, her physical morphology is completely flexible. In field trials, she adapts into:
+  1. **Floating Wetland Bio-Rafts:** Low-profile, hydrodynamic buoyant collars for stormwater ponds and Puget Sound swales.
+  2. **Vertical Modular Cassettes:** High-density interlocking root columns for urban industrial walls.
+  3. **Fractal Aeroponic Scaffolds:** Optimized surface-area geometries that maximize metal-bearing sap flux.
+
+Form always follows ecological function, while the avatar remains our emotional anchor!`;
+    } else {
+      reply = `Hello Dawn! As your ONMOTIO AI Co-Scientist, I am connected to all components of the Ms. Heavy Metal Leaf project:
+
+- **Phase 0 Baseline Data:** The validated $r = +0.89$ correlation between soil moisture and leaf deflection, plus the 90-minute $+17^\\circ$ rehydration recovery.
+- **Chrislance's Hardware Architecture:** High-impedance INA128 Analog Front-End, 60Hz notch filtering, and ESP32-S3 DAQ.
+- **Plant Protection & Faraday Shielding:** Passive measurement, TVS diode surge clamping, and grounded mesh enclosures to ensure plants are never exposed to dangerous voltages.
+- **Guided Molds & 9 Prototype Visions:** In-vivo vascular growth shaping, circular phytomining, and modular housings.
+- **Grant Dossiers:** NSF PAPPG compliance and Washington State Department of Ecology stormwater applications.
+
+What question or experiment would you like to explore next?`;
+    }
+
+    return res.json({ reply, source: 'onmotio-scientific-engine' });
+  } catch (err) {
+    console.error('Error in /api/chat:', err);
+    return res.status(500).json({ error: 'Internal server error processing research query' });
+  }
+});
+
 // Health check endpoint
 app.get('/api/health', (_req: Request, res: Response) => {
   res.json({

@@ -11,7 +11,8 @@ import {
   Download,
   Box,
   TrendingUp,
-  LineChart
+  LineChart,
+  Bot
 } from 'lucide-react';
 import { ActiveTab } from '../types';
 
@@ -40,11 +41,12 @@ export const Header: React.FC<HeaderProps> = ({
 }) => {
   const tabs: TabItem[] = [
     { id: 'dashboard', label: 'Environmental Dashboard', icon: TrendingUp, badge: 'Telemetry' },
+    { id: 'assistant', label: 'AI Co-Scientist', icon: Bot, badge: 'Gemini AI' },
+    { id: 'blueprints', label: 'Prototype Visions & Molds', icon: Box, badge: '10 Studies' },
     { id: 'analytics', label: 'Bio-Correlation Analytics', icon: LineChart, badge: 'Recharts' },
     { id: 'observations', label: 'Plant Observations', icon: Sprout, count: observationCount },
     { id: 'simulator', label: 'Signal Oscilloscope', icon: Activity, badge: 'Live' },
     { id: 'architecture', label: 'Hardware Architecture', icon: Cpu, badge: 'AFE & MCU' },
-    { id: 'blueprints', label: 'CAD Blueprints & Molds', icon: Box, badge: '8 Files' },
     { id: 'grants', label: 'Grant Proposal Hub', icon: FileText, badge: 'WA & NSF' },
     { id: 'phytomining', label: 'Phytomining & Cyborg Botany', icon: Database },
     { id: 'collaboration', label: 'R&D Team & Partners', icon: Users, badge: 'Fiverr Collab' }

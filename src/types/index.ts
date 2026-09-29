@@ -1,5 +1,6 @@
 export type ActiveTab = 
   | 'dashboard'
+  | 'assistant'
   | 'analytics'
   | 'observations'
   | 'simulator'
@@ -73,12 +74,23 @@ export interface BlueprintArtifact {
   id: string;
   title: string;
   filename: string;
-  category: 'CAD Guided Growth Mold' | 'Phase 1 Architecture' | 'Full System Prototype' | 'Narrative Concept' | 'Data CSV';
+  category: 
+    | 'CAD Guided Growth Mold' 
+    | 'Phase 1 Architecture' 
+    | 'Full System Prototype' 
+    | 'Narrative Concept' 
+    | 'Living Bio-Hybrid' 
+    | 'Grown Circuitry' 
+    | 'Field Sentinel' 
+    | 'Data CSV';
   fileSize: string;
   housingType: ModularHousingType;
   promptDescription: string;
   technicalSpecs: string[];
   moldGuidelines: string;
+  imageUrl?: string;
+  visionTheme?: string;
+  founderQuote?: string;
 }
 
 export interface HyperaccumulatorSpecies {
