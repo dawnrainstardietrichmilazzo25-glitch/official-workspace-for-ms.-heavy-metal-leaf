@@ -13,7 +13,9 @@ import {
   Radio, 
   ShieldCheck, 
   Microchip,
-  Sparkles
+  Sparkles,
+  AlertTriangle,
+  FileCode
 } from 'lucide-react';
 import { HardwareBlock } from '../../types';
 import { HARDWARE_BLOCKS } from '../../data/mockData';
@@ -65,7 +67,65 @@ export const ArchitectureExplorerTab: React.FC = () => {
           </p>
         </div>
 
-        <div className="flex items-center gap-2 shrink-0">
+        <div className="flex items-center gap-2 shrink-0 flex-wrap">
+          <button
+            onClick={() => {
+              const drawingsText = `================================================================================
+ONMOTIO // MS. HEAVY METAL LEAF — PHASE ZERO HARDWARE DRAWINGS & CIRCUIT SPEC
+Engineering Lead: Chrislance | Concept Lead: Dawn
+Target Review: Phase Zero Technical Feasibility & Architecture Review
+================================================================================
+
+1. ANALOG FRONT-END (AFE) SPECIFICATIONS
+--------------------------------------------------------------------------------
+- Primary Instrumentation Amplifier: Texas Instruments INA128
+- Input Impedance: > 10^12 Ohms (1 Teraohm) differential
+- Input Bias Current: < 2.0 nA (prevents biological electroporation/damage)
+- Common-Mode Rejection Ratio (CMRR): 120 dB min (G = 100)
+- Gain Resistor (R_G): 500 Ohms (yielding G = 1 + (50k / 500) = 101 V/V)
+- Power Supply: Dual Rail +/- 3.3V (Galvanically isolated via DC-DC converter)
+
+2. PLANT OVERVOLTAGE & SURGE PROTECTION (EOS)
+--------------------------------------------------------------------------------
+- Low-Leakage Schottky TVS Diode Clamps: Placed between Petiole In+ and GND,
+  and Root In- and GND. Clamps voltage spikes < 0.3V.
+- Current-Limiting Series Resistors: 1 MOhm to 10 MOhm in series with Ag/AgCl
+  probes to guarantee zero lethal current density reaching plant tissue.
+- Driven Guard (Active Shielding): Coaxial cable outer shield driven by op-amp
+  buffer at signal potential to eliminate cable capacitance and 60Hz hum.
+
+3. FILTERING STAGE
+--------------------------------------------------------------------------------
+- Active Twin-T 60 Hz Notch Filter: Q = 10, notch depth > 45 dB
+- 2nd-Order Sallen-Key Low-Pass Filter: Cutoff frequency f_c = 15 Hz
+  (eliminates RF and high-frequency noise while preserving DC slow-wave biopotentials)
+
+4. DATA ACQUISITION & MCU
+--------------------------------------------------------------------------------
+- Microcontroller: Espressif ESP32-S3 (Dual-core 240MHz, 2.4GHz Wi-Fi + BLE 5.0)
+- ADC: ADS1115 (16-bit Delta-Sigma ADC over I2C) or internal ESP32 12-bit ADC
+- Sampling Rate: 10 Hz nominal (sub-15 uA deep-sleep duty cycle)
+- Telemetry: MQTT / HTTPS to ONMOTIO Research Workbench & Google Sheets Sync
+
+================================================================================
+Generated for Chrislance Phase Zero Technical Feasibility & Architecture Review
+================================================================================`;
+              const blob = new Blob([drawingsText], { type: 'text/plain;charset=utf-8;' });
+              const url = URL.createObjectURL(blob);
+              const link = document.createElement('a');
+              link.href = url;
+              link.download = 'ONMOTIO_Hardware_Drawings_AFE_Schematic.txt';
+              document.body.appendChild(link);
+              link.click();
+              document.body.removeChild(link);
+              URL.revokeObjectURL(url);
+            }}
+            className="flex items-center gap-1.5 px-3 py-2 text-xs font-semibold rounded-xl bg-slate-800 text-teal-300 border border-teal-500/40 hover:bg-slate-700 transition-colors cursor-pointer"
+          >
+            <FileCode className="w-4 h-4" />
+            <span>Download Drawings for Chrislance</span>
+          </button>
+
           <button
             onClick={handleExportBom}
             className="flex items-center gap-1.5 px-3.5 py-2 text-xs font-semibold rounded-xl bg-teal-500 text-slate-950 hover:bg-teal-400 transition-colors shadow-md cursor-pointer"
@@ -73,6 +133,27 @@ export const ArchitectureExplorerTab: React.FC = () => {
             <Download className="w-4 h-4" />
             <span>Export Full BOM CSV</span>
           </button>
+        </div>
+      </div>
+
+      {/* Epistemic Truth Separation Banner */}
+      <div className="p-4 rounded-xl bg-gradient-to-r from-amber-950/40 via-slate-900 to-teal-950/40 border border-amber-500/40 flex items-start gap-3">
+        <AlertTriangle className="w-5 h-5 text-amber-400 shrink-0 mt-0.5" />
+        <div className="space-y-1 text-xs">
+          <div className="flex items-center gap-2 flex-wrap">
+            <span className="font-mono font-bold text-amber-300 uppercase tracking-wide">
+              Epistemic Verification Matrix: Hardware & Circuitry
+            </span>
+            <span className="text-[10px] px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-300 font-mono">
+              TI INA128 Datasheet: Verified Physics
+            </span>
+            <span className="text-[10px] px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-300 font-mono">
+              Breadboard Interconnect: Proposed Model
+            </span>
+          </div>
+          <p className="text-slate-300 leading-relaxed font-sans">
+            Following Dawn and Chrislance's directive to <em>"keep facts separated from what hasn't been tested yet"</em>: The electrical parameters of the Texas Instruments INA128 (&gt;10¹² Ω input impedance, &lt;2 nA bias current, 120 dB CMRR) and passive TVS surge clamping are <strong>mathematically and physically verified component properties</strong>. However, the multi-channel breadboard interconnect and live petiole transduction are <strong>proposed engineering designs</strong> subject to Chrislance's upcoming Phase Zero Technical Feasibility Review before physical PCB fabrication.
+          </p>
         </div>
       </div>
 

@@ -13,7 +13,8 @@ import {
   ShieldAlert, 
   CheckCircle2,
   Gauge,
-  Radio
+  Radio,
+  AlertTriangle
 } from 'lucide-react';
 import { exportToCsv } from '../../utils/analysis';
 
@@ -339,6 +340,24 @@ export const SignalSimulatorTab: React.FC = () => {
             <Download className="w-4 h-4 text-emerald-400" />
             <span className="hidden sm:inline">Export CSV</span>
           </button>
+        </div>
+      </div>
+
+      {/* Epistemic Truth Separation Banner */}
+      <div className="p-4 rounded-xl bg-amber-950/40 border border-amber-500/40 flex items-start gap-3">
+        <AlertTriangle className="w-5 h-5 text-amber-400 shrink-0 mt-0.5" />
+        <div className="space-y-1 text-xs">
+          <div className="flex items-center gap-2">
+            <span className="font-mono font-bold text-amber-300 uppercase tracking-wide">
+              🟡 Tier 2: Synthetic Mathematical Model (Pending Physical Bench Validation)
+            </span>
+            <span className="text-[10px] px-1.5 py-0.5 rounded bg-amber-500/10 text-amber-400 font-mono">
+              Epistemic Transparency
+            </span>
+          </div>
+          <p className="text-slate-300 leading-relaxed font-sans">
+            As agreed with hardware engineer <strong>Chrislance</strong>: <em>"We need to keep the facts separated from the things that are maybe possible but haven't been tested yet."</em> The waveforms and biopotential signals displayed on this virtual oscilloscope are <strong>computational bio-mathematical models</strong> calibrated to test our filter cutoff frequencies (15 Hz low-pass, 60 Hz notch) and DAQ sampling algorithms. They are <strong>NOT</strong> live physical bench measurements from electrodes yet. Physical bench validation begins under Chrislance's proposed Phase Zero Technical Feasibility Review.
+          </p>
         </div>
       </div>
 

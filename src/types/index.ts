@@ -1,6 +1,7 @@
 export type ActiveTab = 
   | 'dashboard'
   | 'assistant'
+  | 'knowledge'
   | 'analytics'
   | 'observations'
   | 'simulator'

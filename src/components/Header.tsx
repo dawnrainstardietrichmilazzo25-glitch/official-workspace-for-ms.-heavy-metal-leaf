@@ -12,7 +12,9 @@ import {
   Box,
   TrendingUp,
   LineChart,
-  Bot
+  Bot,
+  Network,
+  FileSpreadsheet
 } from 'lucide-react';
 import { ActiveTab } from '../types';
 
@@ -30,6 +32,8 @@ interface HeaderProps {
   observationCount: number;
   onExportAll: () => void;
   onOpenQuickLog: () => void;
+  onSyncGoogleSheets?: () => void;
+  isGoogleSheetsLoading?: boolean;
 }
 
 export const Header: React.FC<HeaderProps> = ({
@@ -37,15 +41,18 @@ export const Header: React.FC<HeaderProps> = ({
   setActiveTab,
   observationCount,
   onExportAll,
-  onOpenQuickLog
+  onOpenQuickLog,
+  onSyncGoogleSheets,
+  isGoogleSheetsLoading = false
 }) => {
   const tabs: TabItem[] = [
     { id: 'dashboard', label: 'Environmental Dashboard', icon: TrendingUp, badge: 'Telemetry' },
     { id: 'assistant', label: 'AI Co-Scientist', icon: Bot, badge: 'Gemini AI' },
+    { id: 'knowledge', label: 'Epistemic Truth Network', icon: Network, badge: 'Facts vs Ideas' },
     { id: 'blueprints', label: 'Prototype Visions & Molds', icon: Box, badge: '10 Studies' },
     { id: 'analytics', label: 'Bio-Correlation Analytics', icon: LineChart, badge: 'Recharts' },
     { id: 'observations', label: 'Plant Observations', icon: Sprout, count: observationCount },
-    { id: 'simulator', label: 'Signal Oscilloscope', icon: Activity, badge: 'Live' },
+    { id: 'simulator', label: 'Signal Oscilloscope', icon: Activity, badge: 'Model' },
     { id: 'architecture', label: 'Hardware Architecture', icon: Cpu, badge: 'AFE & MCU' },
     { id: 'grants', label: 'Grant Proposal Hub', icon: FileText, badge: 'WA & NSF' },
     { id: 'phytomining', label: 'Phytomining & Cyborg Botany', icon: Database },
@@ -121,6 +128,18 @@ export const Header: React.FC<HeaderProps> = ({
               <Download className="w-3.5 h-3.5 text-slate-400" />
               <span className="hidden sm:inline">Export CSV</span>
             </button>
+
+            {onSyncGoogleSheets && (
+              <button
+                onClick={onSyncGoogleSheets}
+                disabled={isGoogleSheetsLoading}
+                className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-lg bg-emerald-600/30 hover:bg-emerald-600/40 text-emerald-300 border border-emerald-500/40 transition-colors shadow-sm cursor-pointer disabled:opacity-50"
+                title="Sync observations directly into Google Sheets (Google Drive)"
+              >
+                <FileSpreadsheet className={`w-3.5 h-3.5 text-emerald-400 ${isGoogleSheetsLoading ? 'animate-spin' : ''}`} />
+                <span>{isGoogleSheetsLoading ? 'Syncing...' : 'Google Sheets Sync'}</span>
+              </button>
+            )}
           </div>
 
         </div>

@@ -10,14 +10,19 @@ import { SignalSimulatorTab } from './components/tabs/SignalSimulatorTab';
 import { ArchitectureExplorerTab } from './components/tabs/ArchitectureExplorerTab';
 import { GuidedMoldsTab } from './components/tabs/GuidedMoldsTab';
 import { AiResearchAssistantTab } from './components/tabs/AiResearchAssistantTab';
+import { CommunityKnowledgeNetwork } from './components/tabs/CommunityKnowledgeNetwork';
 import { GrantDossierTab } from './components/tabs/GrantDossierTab';
 import { PhytominingDatabaseTab } from './components/tabs/PhytominingDatabaseTab';
 import { CollaborationLogTab } from './components/tabs/CollaborationLogTab';
 import { exportToCsv } from './utils/analysis';
-import { Sprout, ExternalLink, ShieldCheck, Heart } from 'lucide-react';
+import { exportToGoogleSheets } from './services/googleSheetsService';
+import { Sprout, ExternalLink, ShieldCheck, Heart, FileSpreadsheet, CheckCircle2, AlertTriangle, X } from 'lucide-react';
 
 export default function App() {
   const [activeTab, setActiveTab] = useState<ActiveTab>('dashboard');
+  const [isSheetsSyncing, setIsSheetsSyncing] = useState(false);
+  const [sheetsSyncToast, setSheetsSyncToast] = useState<{ url: string; title: string } | null>(null);
+  const [sheetsSyncError, setSheetsSyncError] = useState<string | null>(null);
   const [observations, setObservations] = useState<PlantObservation[]>(() => {
     try {
       const saved = localStorage.getItem('onmotio_observations');
@@ -50,6 +55,21 @@ export default function App() {
     exportToCsv(observations, `ONMOTIO_All_Observations_${new Date().toISOString().split('T')[0]}.csv`);
   };
 
+  const handleSyncGoogleSheets = async () => {
+    setIsSheetsSyncing(true);
+    setSheetsSyncError(null);
+    try {
+      const res = await exportToGoogleSheets(observations);
+      setSheetsSyncToast({ url: res.spreadsheetUrl, title: 'Mustard Pilot Dataset' });
+      window.open(res.spreadsheetUrl, '_blank');
+    } catch (err: any) {
+      console.error('Google Sheets sync error:', err);
+      setSheetsSyncError(err.message || 'Failed to sync with Google Sheets. Please check permissions.');
+    } finally {
+      setIsSheetsSyncing(false);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col font-sans selection:bg-emerald-500 selection:text-black">
       
@@ -62,7 +82,51 @@ export default function App() {
         onOpenQuickLog={() => {
           setActiveTab('observations');
         }}
+        onSyncGoogleSheets={handleSyncGoogleSheets}
+        isGoogleSheetsLoading={isSheetsSyncing}
       />
+
+      {/* Floating Google Sheets Sync Notification */}
+      {sheetsSyncToast && (
+        <div className="fixed top-20 right-6 z-50 p-4 rounded-2xl bg-slate-900 border border-emerald-500/50 shadow-2xl flex items-center gap-3 backdrop-blur-md">
+          <FileSpreadsheet className="w-5 h-5 text-emerald-400 shrink-0" />
+          <div className="space-y-0.5 text-xs font-mono">
+            <span className="font-bold text-white block">Successfully Synced to Google Sheets!</span>
+            <a
+              href={sheetsSyncToast.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-emerald-400 hover:text-emerald-300 underline flex items-center gap-1"
+            >
+              <span>Open Spreadsheet in Google Drive</span>
+              <ExternalLink className="w-3 h-3" />
+            </a>
+          </div>
+          <button
+            onClick={() => setSheetsSyncToast(null)}
+            className="p-1 rounded-lg text-slate-400 hover:text-white cursor-pointer ml-2"
+          >
+            <X className="w-4 h-4" />
+          </button>
+        </div>
+      )}
+
+      {/* Floating Google Sheets Sync Error */}
+      {sheetsSyncError && (
+        <div className="fixed top-20 right-6 z-50 p-4 rounded-2xl bg-red-950/90 border border-red-500/50 shadow-2xl flex items-center gap-3 backdrop-blur-md">
+          <AlertTriangle className="w-5 h-5 text-red-400 shrink-0" />
+          <div className="space-y-0.5 text-xs font-mono">
+            <span className="font-bold text-white block">Google Sheets Sync Notice</span>
+            <p className="text-red-200 text-[11px] max-w-sm">{sheetsSyncError}</p>
+          </div>
+          <button
+            onClick={() => setSheetsSyncError(null)}
+            className="p-1 rounded-lg text-red-400 hover:text-white cursor-pointer ml-2"
+          >
+            <X className="w-4 h-4" />
+          </button>
+        </div>
+      )}
 
       {/* Main Content Area */}
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
@@ -79,6 +143,10 @@ export default function App() {
 
         {activeTab === 'assistant' && (
           <AiResearchAssistantTab />
+        )}
+
+        {activeTab === 'knowledge' && (
+          <CommunityKnowledgeNetwork />
         )}
 
         {activeTab === 'analytics' && (
